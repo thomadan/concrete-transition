@@ -1,0 +1,21 @@
+
+#frame {
+	
+	background-color: #f2f0f0;
+
+	position: relative;  		/* this might be for its child elements; we will see */
+	width: 100vw;		 		/* full width */
+	max-width: 70em;	 		/* however do not exceed this value */
+	margin: auto;		 		/* for flex to work, flex works on margins */
+	padding-top: 65%;    		/* this ensures that height scales with width */
+}
+
+
+#titlen {
+	position: absolute;
+	top: -3em;
+	width: 100%;
+
+	text-align: center;
+	font-size: 2.5em;
+}

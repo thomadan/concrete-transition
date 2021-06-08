@@ -1,0 +1,45 @@
+/*
+
+this, App.js, is the container for the frame object.
+its purpose is
+  to be a full screen colored background on which to center the frame
+
+*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Roboto:wght@100;300&display=swap');
+
+html {
+
+	height: 100%; /* allow the flex display to utilize the entire display area */
+}	
+
+body {
+	
+	margin: 0 ; /*  body has default margin of 10px */
+
+	height: 100%; /* allow the flex display to utilize the entire display area */
+
+	/*  about display: flex:
+	      parent element has display flex property.
+		  justify-content is horizontal
+		  align-items is vertical
+		  child elements must have margin: auto for flex to work, flex works on margins */  
+
+	display: flex;
+	align-items: center;	
+	justify-content: center;
+
+	background-color:#faf9f9;
+	
+}
+
+
+p {
+	color: #887777;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 100;
+}
+
+#wrapperDiv {
+	margin: 100px;
+
+}

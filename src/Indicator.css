@@ -1,0 +1,17 @@
+#handle1 {
+
+    position: absolute;
+}
+
+#handle2 {
+
+    position: absolute;
+}
+
+#draggable1 {
+    will-change: transform; /* let browser know to optimize this parameter, avoiding janky motion */
+}
+
+#draggable2 {
+    will-change: transform; /* let browser know to optimize this parameter, avoiding janky motion */
+}
