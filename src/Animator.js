@@ -9,13 +9,15 @@ there are two spots for css: Image.css and const divStyle
 */
 
 // todo: get size of parent on which to stretch canvas
+// cutout <p id='animatorTitle' >play CSS transition following brightness graph left to right</p>
+
+
 import './Animator.css';
 
 function Animator (props) {
 
   return (
     <div id='ani' className='animator'>
-      <p id='animatorTitle' >play CSS transition following brightness graph left to right</p>
       <svg onClick={props.startTransition} id='playTriangle' viewBox="0 0 100 100">
         <polygon points="35,35 35,65 65,50"/>
       </svg>

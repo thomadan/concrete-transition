@@ -5,71 +5,7 @@ its purpose is
   to be a centered, dynamically resizing container in which to place its children
 it is vertically centered and full screen width up to 70 em
 
-NOW:
-  title should center vertically in available space, also on resize
 
-todo today
-  play button should not go out of right bounds
-  subtitles should fit narrow width/height
-  play line should be same style as scan line
-  play line should be accurately placed
-  graph should have a solid relation to its borders
-
-TODO BUGS:
-  check performance on low end devices
-  when dragging outside canvas, crash: set dragging bounds
-  sometimes a line of background is visible, depending on width of window
-  when resizing small horizontally, top disappears
-  title is jumping with bars
-  when dragging circle, it cuts edge (make margin bigger?)
-
-TODO ADJUST:
-  dynamic contrast of circles
-  limit to 100 points for animation export
-  currently only red is used?
-  white screen before load rather than flashing random stuff
-
-TODO CLEANUP:
-  use return rather than method props ... in order to encapsulate
-  clean up code so far
-  clean up warnings in console
-  combine useeffect in one, not two?
-  consider baking usestates inside one object
-  make sure that all references to size is pointing to a var
-  check all prop sends are good style
-
-TODO FEATURES:
-  circles are hand drawn on transparent
-  get it on git
-  make lowpass filter damping dynamic by fader
-  l and r markers of handles are missing
-  settings menu is missing, with smooth
-  handle should transform on hover
-  framing of graph is missing
-
-TODO DOCUMENT:
-  credit: drag and drop library
-  credit: LPF library: https://www.npmjs.com/package/lpf
-  credit: curve library
-  credit new draggable from https://levelup.gitconnected.com/create-an-easy-custom-react-hook-for-dragging-components-3779b30d08b5
-  credit translate values from https://sagarpansuriya.wordpress.com/2020/08/08/how-to-get-css-translate-values-with-javascript/
-  moving average: https://github.com/kaelzhang/moving-averages#readme
-  useWindowSize: https://usehooks.com/useWindowSize/
-
-DONE: 
-  filter starts at strange position - must pad start values?
-  position handles and line mid-canvas at start
-  svg container for line is not in place
-  bug: line is not always centering within circle: x and y on mark
-  main issue: image canvas is too big, skewing scan coordinates
-  filter is strange behavior - suspect filter or curve does not like minus values - convert all to +?
-  handles are off screen: check position:relative, etc.
-  line is not centering in handles: follow and ... reqth
-  graph is not scaling correctly: drawingcanvaswidth should be replaced with winwos wideth
-  how to get portion of image that i want
-  filter has strange shark fin curve on hard onsets - get better filter? yes, get or make second order filter
-  when handle/line position is not scaling: x1 should be dynamic width of canvas + something 
-  graph is too high: on resize get height of graph, etc.
 */
 
 import React, {useState, useEffect, useRef} from 'react';
@@ -248,7 +184,7 @@ function Frame() {
     drawCtx.stroke();
 
     setCalibratePoint(points[0]);
-    document.getElementById("playTriangle").style.transform = "translate(" + (480 - (points[0] + calibratePoint)) + "px)";
+    document.getElementById("playTriangle").style.transform = "translate(" + (0 - (points[0] + calibratePoint)) + "px)";
   }
 
   // filtering points to be graphed, using LPF library
@@ -316,14 +252,7 @@ function Frame() {
 
     function myTimer() {
 
-      //document.getElementById('playTriangle').style.top = (480 - (points[i] + calibratePoint));
-      //document.getElementById('playTriangle').style.marginLeft = (480 - (points[i] + calibratePoint));
-      //document.getElementById('playTriangle').style.opacity = (1 - (0 - ((points[i] - calibratePoint) / calibratePoint)));
-      //document.getElementById('playTriangle').style.transform = "translate " + (480 - (points[i] + calibratePoint)) + "px";
-      //document.getElementById('playTriangle').style.transform = {translate,};
-      //document.getElementById("playTriangle").style.transform = "translate(200px)";
-      //document.getElementById("myDIV").style.transform = "translate(20%,100%)";
-      document.getElementById("playTriangle").style.transform = "translate(" + (480 - (points[i] + calibratePoint)) + "px)";
+      document.getElementById("playTriangle").style.transform = "translate(" + (0 - (points[i] + calibratePoint)) + "px)";
 
       if(direction === 1){
         i++;

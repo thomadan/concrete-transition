@@ -7,6 +7,9 @@ alternatively not background but html element: <img src={image} alt="" style={im
 there are two spots for css: Image.css and const divStyle
   this is because some elements are supposed to be dynamic, like opacity and image choice
 
+cutout       <p id='bildetTitle' >draggable circles adjust line measuring image brightness</p>
+
+
 */
 
 // todo: get size of parent on which to stretch canvas
@@ -57,7 +60,6 @@ function Bildet (props) {
   return (
     <div id='bildet'>
       <canvas ref={props.passRef} id="canvasPic" width={'1120'} height="364"></canvas>
-      <p id='bildetTitle' >draggable circles adjust line measuring image brightness</p>
       <Indicator 
         frameWidth={props.frameWidth}
         bildetHeight={props.bildetHeight}
