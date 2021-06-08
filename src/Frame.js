@@ -5,7 +5,7 @@ its purpose is
   to be a centered, dynamically resizing container in which to place its children
 it is vertically centered and full screen width up to 70 em
 
-
+cutout: <p onClick={redraw} id='titlen'>CSS transition from image</p>
 */
 
 import React, {useState, useEffect, useRef} from 'react';
@@ -279,8 +279,6 @@ function Frame() {
 
   return (
     <div id="frame">
-
-      <p onClick={redraw} id='titlen'>CSS transition from image</p>
 
       <Bildet
         plotLine={plotLine}
