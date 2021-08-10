@@ -23,6 +23,9 @@ function Frame() {
 
   const [frameWidth, setFrameWidth] = useState(100);
   const [bildetHeight, setBildetHeight] = useState(100);
+  const [drawingCanvasWidth, setDrawingCanvasWidth] = useState(null);
+  const [drawingCanvasHeight, setDrawingCanvasHeight] = useState(null);
+  const [graphHeight, setGraphHeight] = useState(null);
 
   // references for canvas before it is initialized
   const imageCanvasRef = useRef(null);
@@ -30,23 +33,19 @@ function Frame() {
 
   // state variables
   const [x1, setX1] = useState(100);    // indicator endpoint 1 x coordinate
-  const [y1, setY1] = useState(100);    //   and y coordinate
+  const [y1, setY1] = useState(200);    //   and y coordinate
   const [x2, setX2] = useState(300);    // indicator endpoint 2 x coordinate
   const [y2, setY2] = useState(200);    //   and y coordinate
 
-  const [x1p, setX1p] = useState(0.2);    // indicator endpoint 1 x coordinate
-  const [y1p, setY1p] = useState(0.2);    //   and y coordinate
-  const [x2p, setX2p] = useState(0.3);    // indicator endpoint 2 x coordinate
-  const [y2p, setY2p] = useState(0.3);    //   and y coordinate
+  const [x1p, setX1p] = useState(0.57);    // indicator endpoint 1 x coordinate
+  const [y1p, setY1p] = useState(0.8);    //   and y coordinate
+  const [x2p, setX2p] = useState(0.7);    // indicator endpoint 2 x coordinate
+  const [y2p, setY2p] = useState(0.5);    //   and y coordinate
 
   const defaultX1 = 100;
   const defaultY1 = 270;
   const defaultX2 = 100;
   const defaultY2 = 200;
-
-  const [drawingCanvasWidth, setDrawingCanvasWidth] = useState(null);
-  const [drawingCanvasHeight, setDrawingCanvasHeight] = useState(null);
-  const [graphHeight, setGraphHeight] = useState(null);
 
   const [smooth, setSmooth] = useState(3);    // indicator endpoint 1 x coordinate
 
@@ -60,8 +59,6 @@ function Frame() {
   // on first render
   useEffect(() => {
 
-    console.log('bare første gang');
-
     // get width, height from frame, set canvas dimensions
     setDrawingCanvasWidth(document.getElementById('drawingCanvas').getBoundingClientRect().width);
     setDrawingCanvasHeight(document.getElementById('drawingCanvas').getBoundingClientRect().height);
@@ -72,29 +69,40 @@ function Frame() {
 
     // call handler right away so state gets updated with initial window size
     handleResize();
+
+    plotDelay();
+
   }, []);
 
   // on every change in state
   useEffect(() => {
-    console.log('hver gang noe endres i frame'); // som når resize trigger [set]
+    // console.log('hver gang noe endres i frame'); // som når resize trigger [set]
 
     plotLine();
 
     // this is what scales handles and line !!
     setX1(x1p * frameWidth);
     setY1(bildetHeight * y1p);
-    console.log('x1p ' + x1p);
 
     setX2(frameWidth * x2p);
     setY2(bildetHeight * y2p);
-
-    /*
-    setX1(frameWidth/5);
-    setX2(frameWidth/2);
-    setY1(bildetHeight/10);
-    setY2(bildetHeight/5);
-    */
   });
+
+
+  function plotDelay() {
+
+    setTimeout(function() {
+        
+      setX1(x1p * frameWidth);
+      setY1(bildetHeight * y1p);
+
+      setX2(frameWidth * x2p);
+      setY2(bildetHeight * y2p);
+    }, 50);
+  }
+
+
+
 
   // initialize canvases
   function initCanvas (initx, inity) {
@@ -115,10 +123,10 @@ function Frame() {
   // record handle positions for use by line drawing and line scanning
   function setXY(handleID, xgot, ygot) {
     if (handleID == 0) {
-      console.log('nå flytter vi');
+      // console.log('nå flytter vi');
 
       setX1p(xgot / frameWidth);
-      console.log('xgot ' + xgot + ' frameWidth ' + frameWidth + ' x1p ' + x1p);
+      // console.log('xgot ' + xgot + ' frameWidth ' + frameWidth + ' x1p ' + x1p);
       setX1(frameWidth * x1p);
       setY1p(ygot / bildetHeight);
       setY1(frameWidth * y1p);
@@ -136,11 +144,12 @@ function Frame() {
     setFrameWidth(document.getElementById('frame').getBoundingClientRect().width);
     setBildetHeight(document.getElementById('bildet').getBoundingClientRect().height);
 
-    console.log('resized');
+    // console.log('resized');
   }
 
   // function for drawing graph from line, walk through coordinates of line, for each point extract colo value and plot on graph
   function plotLine () {
+    console.log("plot");
 
     // is there a more ... way of doing this check for exist, etc.?
     const imageCtx = imageCanvasRef.current.getContext("2d");
@@ -154,18 +163,19 @@ function Frame() {
 
     // special coordinates for extracting data
     // here we are scaling x and y to account for mismatch due to static width image source vs potentially resized canvas
+    // !!1120
     const lx1 = x1 * (1120 / frameWidth);
     const ly1 = y1 * (1120 / frameWidth);
     const lx2 = x2 * (1120 / frameWidth);
     const ly2 = y2 * (1120 / frameWidth);
 
-    var firstColorPoint = 255 - imageCtx.getImageData(lx1, ly1, 1, 1).data[0];
-    var lastColorPoint = 255 - imageCtx.getImageData(lx2, ly2, 1, 1).data[0];
+    const firstColorPoint = 255 - imageCtx.getImageData(lx1, ly1, 1, 1).data[0];
+    const lastColorPoint = 255 - imageCtx.getImageData(lx2, ly2, 1, 1).data[0];
 
-    console.log('first color point ' + firstColorPoint);
+    // console.log('first color point ' + firstColorPoint);
 
     // populate points array with color values along line
-    for (var i=0; i<numberOfPoints; i++) {
+    for (let i=0; i<numberOfPoints; i++) {
 
       // get color data from pixel at current point along line
       var data = imageCtx.getImageData(lx1 + ((lx2 - lx1) / numberOfPoints * i), ly1 + ((ly2 - ly1) / numberOfPoints * i), 1, 1).data;
@@ -177,14 +187,21 @@ function Frame() {
     // filter points
     points = filter(points, firstColorPoint, lastColorPoint);
 
-    for (var i=1; i<numberOfPoints; i++) {
+    // set starting point
+    drawCtx.moveTo(0, points[0] / 255 * drawingCanvasHeight);
+
+    // draw points on canvas
+    for (let i=1; i<numberOfPoints; i++) {
       drawCtx.lineTo(drawingCanvasWidth/numberOfPoints*i, points[i] / 255 * drawingCanvasHeight);
     }
+
+    drawCtx.lineTo(drawingCanvasWidth, points[numberOfPoints] / 255 * drawingCanvasHeight);
+
     
     drawCtx.stroke();
 
     setCalibratePoint(points[0]);
-    document.getElementById("playTriangle").style.transform = "translate(" + (0 - (points[0] + calibratePoint)) + "px)";
+
   }
 
   // filtering points to be graphed, using LPF library
@@ -199,21 +216,12 @@ function Frame() {
     for (var i=0; i < 30; i++) {
       points.push(lastColorPoint);
     }
-
-    //points = sma(points, 2, 1.7);
-    //points = sma(points, 10, 2.1);
-    //points = sma(points, 10, 2.1);
-    //points = sma(points, 10, 2.1);
-    //points = sma(points, 10, 2.1);
-    //points = sma(points, 10, 2.1);
-    
+ 
     points = ema(points, smooth);
     points = ema(points, smooth);
     points = ema(points, smooth);
     points = ema(points, smooth);
     points = ema(points, smooth);
-
-    //console.log('smo ' + smooth);
 
     // remove 30 pre points again
     points.splice(0, 30);
@@ -221,60 +229,48 @@ function Frame() {
     return points
   }
 
-  function redraw() {
+  function animate () {
 
-    /*
-    var canvasPic = document.getElementById("canvasPic");
-    var ctx = canvasPic.getContext("2d");
+    // make play index visible
+    document.getElementById("playIndexLine").style.visibility = "visible";
+    // document.getElementById("playIndexLine").style.visibility = "hidden";
+    console.log(document.getElementById("playIndexLine").style.visibility);
 
-    ctx.clearRect(0, 0, 12, 40);
-    ctx.fillStyle = "#00FFF2";         // make background fill (is this necessary?)
-    ctx.fillRect(0, 0, 112, 36);
 
-    var imageObj = new Image();
-    imageObj.src = image;
-    imageObj.onload = function() {
-      //void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+    // maybe screen animation instead
+    const myVar = setInterval(playOneFrame, 15);
 
-      ctx.drawImage(imageObj, 0, 0, frameWidth, 100);
-    };
-    */
+    let direction = 1;
+    let i = 0;
 
-    console.log('redraw ');
-  }
+    // establish zero value from points[i]
+    const valueAtZero = points[0];
 
-  function startTransition () {
+    function playOneFrame() {
 
-    var myVar = setInterval(myTimer, 15);
-
-    var direction = 1;
-    var i = 0;
-
-    function myTimer() {
-
-      document.getElementById("playTriangle").style.transform = "translate(" + (0 - (points[i] + calibratePoint)) + "px)";
-
-      if(direction === 1){
-        i++;
-      }
-
-      if(direction === 0){
-        i--;
-      }
-
-      if(i === numberOfPoints){
-        direction = 0;
-      }
-
+      // get width of play triangle ?!
+      
       // draw index line
-      document.getElementById("playIndexLine").style.transform = "translate(" + (((drawingCanvasWidth - 25)/numberOfPoints) * i) + "px)";
+      // make sure this function cannot trigger while already active      
+      // current issue: must establish line 0 as center for play and line max as max right of play
+      document.getElementById("playIndexLine").style.transform = "translate(" + (((frameWidth) / numberOfPoints) * i) + "px)";
 
+      // draw play triangle
+      document.getElementById("playTriangle").style.transform = "translate(" + (-1 * ((points[i] / 255) - (valueAtZero / 255)) * ((frameWidth / 2) - 30) + "px)");
 
+      if (direction === 1) {i++;}
+      if (direction === 0) {i--;}
+      if (i === numberOfPoints) {direction = 0;}
       if(i === -1){
         direction = 1;
         clearInterval(myVar);
+
+        // make play index invisible
+        document.getElementById("playIndexLine").style.visibility = "hidden";
       }
     }
+
+
   }
 
   return (
@@ -292,7 +288,7 @@ function Frame() {
         drawingCanvasWidth={drawingCanvasWidth}
         drawingCanvasHeight={drawingCanvasHeight} />
       <Animator 
-        startTransition={startTransition}/>
+        animate={animate}/>
     </div>
   );
 }
@@ -323,7 +319,37 @@ export default Frame;
     drawCtx.curve(points2, 0.2);
 
 
+    //points = sma(points, 2, 1.7);
+    //points = sma(points, 10, 2.1);
+    //points = sma(points, 10, 2.1);
+    //points = sma(points, 10, 2.1);
+    //points = sma(points, 10, 2.1);
+    //points = sma(points, 10, 2.1);
 
+    // not currently doing dynamic horizontal move of play button
+    // document.getElementById("playTriangle").style.transform = "translate(" + (0 - (points[0] + calibratePoint)) + "px)";
+
+  function redraw() {
+
+    /*
+    var canvasPic = document.getElementById("canvasPic");
+    var ctx = canvasPic.getContext("2d");
+
+    ctx.clearRect(0, 0, 12, 40);
+    ctx.fillStyle = "#00FFF2";         // make background fill (is this necessary?)
+    ctx.fillRect(0, 0, 112, 36);
+
+    var imageObj = new Image();
+    imageObj.src = image;
+    imageObj.onload = function() {
+      //void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+
+      ctx.drawImage(imageObj, 0, 0, frameWidth, 100);
+    };
+    
+
+    // console.log('redraw ');
+  }
 
  * Gets computed translate values
  * @param {HTMLElement} element

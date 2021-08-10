@@ -9,11 +9,14 @@ function Graph (props) {
   return (
     <div className='graph'> {/*comment here*/}
       <canvas ref={props.passRef} id="drawingCanvas" width={props.drawingCanvasWidth} height={props.drawingCanvasHeight}></canvas>
-      <svg id='playIndexLine' width="10%" height="100%" >
-        <line id='line' x1='22' y1='0' x2='22' y2='200' />
+      <svg id='playIndexLine' viewBox="0 0 100 100" preserveAspectRatio="none" >
+        <line id='line' x1='50' y1='0' x2='50' y2='100' />
       </svg>
     </div>
   );
 }
 
 export default Graph;
+
+// <rect x="0" y="0" width="100%" height="100%" />
+

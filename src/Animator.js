@@ -18,8 +18,8 @@ function Animator (props) {
 
   return (
     <div id='ani' className='animator'>
-      <svg onClick={props.startTransition} id='playTriangle' viewBox="0 0 100 100">
-        <polygon points="35,35 35,65 65,50"/>
+      <svg onClick={props.animate} id='playTriangle' viewBox="0 0 85 100">
+        <polygon points="0,0 0,100 85,50"/>
       </svg>
     </div>
   );
