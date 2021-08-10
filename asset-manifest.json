@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/concrete-transition/static/css/main.93a9654b.chunk.css",
-    "main.js": "/concrete-transition/static/js/main.76291565.chunk.js",
-    "main.js.map": "/concrete-transition/static/js/main.76291565.chunk.js.map",
+    "main.js": "/concrete-transition/static/js/main.1ef4be3a.chunk.js",
+    "main.js.map": "/concrete-transition/static/js/main.1ef4be3a.chunk.js.map",
     "runtime-main.js": "/concrete-transition/static/js/runtime-main.97232522.js",
     "runtime-main.js.map": "/concrete-transition/static/js/runtime-main.97232522.js.map",
     "static/js/2.cf1de116.chunk.js": "/concrete-transition/static/js/2.cf1de116.chunk.js",
@@ -10,13 +10,13 @@
     "index.html": "/concrete-transition/index.html",
     "static/css/main.93a9654b.chunk.css.map": "/concrete-transition/static/css/main.93a9654b.chunk.css.map",
     "static/js/2.cf1de116.chunk.js.LICENSE.txt": "/concrete-transition/static/js/2.cf1de116.chunk.js.LICENSE.txt",
-    "static/js/main.76291565.chunk.js.LICENSE.txt": "/concrete-transition/static/js/main.76291565.chunk.js.LICENSE.txt",
+    "static/js/main.1ef4be3a.chunk.js.LICENSE.txt": "/concrete-transition/static/js/main.1ef4be3a.chunk.js.LICENSE.txt",
     "static/media/stones.f3314072.jpg": "/concrete-transition/static/media/stones.f3314072.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.97232522.js",
     "static/js/2.cf1de116.chunk.js",
     "static/css/main.93a9654b.chunk.css",
-    "static/js/main.76291565.chunk.js"
+    "static/js/main.1ef4be3a.chunk.js"
   ]
 }
