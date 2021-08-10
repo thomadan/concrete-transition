@@ -98,7 +98,7 @@ function Frame() {
 
       setX2(frameWidth * x2p);
       setY2(bildetHeight * y2p);
-    }, 50);
+    }, 250);
   }
 
 
